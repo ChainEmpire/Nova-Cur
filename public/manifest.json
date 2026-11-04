@@ -1,0 +1,20 @@
+{
+  "short_name": "novaFi",
+  "name": "novaFi",
+  "icons": [
+    {
+      "src": "apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    },
+    {
+      "src": "logoFN.ico",
+      "type": "image/x-icon",
+      "sizes": "256x256"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#03030f",
+  "background_color": "#03030f"
+}

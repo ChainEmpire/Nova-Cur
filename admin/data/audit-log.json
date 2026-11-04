@@ -1,0 +1,41 @@
+[
+  {
+    "id": 4,
+    "at": "2026-08-17T07:44:59.980Z",
+    "action": "admin_logout",
+    "method": "POST",
+    "path": "/admin/auth/logout",
+    "adminId": 1,
+    "adminEmail": "admin@novafi.app",
+    "role": "super_admin",
+    "ok": true,
+    "details": "Logged out."
+  },
+  {
+    "id": 3,
+    "at": "2026-08-17T07:44:59.973Z",
+    "action": "admin_logout",
+    "adminId": 1,
+    "adminEmail": "admin@novafi.app",
+    "role": "super_admin",
+    "ok": true
+  },
+  {
+    "id": 2,
+    "at": "2026-08-17T07:44:31.825Z",
+    "action": "admin_login",
+    "adminId": 1,
+    "adminEmail": "admin@novafi.app",
+    "role": "super_admin",
+    "ok": true
+  },
+  {
+    "id": 1,
+    "at": "2026-08-17T00:32:42.938Z",
+    "action": "admin_login",
+    "adminId": 1,
+    "adminEmail": "admin@novafi.app",
+    "role": "super_admin",
+    "ok": true
+  }
+]

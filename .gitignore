@@ -1,0 +1,11 @@
+node_modules/
+.next/
+dist/
+build/
+.cache/
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+admin/.admin-server.log
+admin/.admin-server.pid

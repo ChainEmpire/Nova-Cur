@@ -1,0 +1,62 @@
+[
+  {
+    "address": "0x10ED43C718714eb63d5aA57B78B54704E256024E",
+    "name": "PancakeSwap Router V2",
+    "type": "router",
+    "chainId": 56,
+    "verified": true,
+    "auditStatus": "community-verified",
+    "status": "approved",
+    "lastReviewedAt": "2026-08-17T00:08:00.000Z",
+    "reviewedBy": "system",
+    "notes": "Primary swap router for BSC trading flows."
+  },
+  {
+    "address": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+    "name": "Wrapped BNB",
+    "type": "token",
+    "chainId": 56,
+    "verified": true,
+    "auditStatus": "verified",
+    "status": "approved",
+    "lastReviewedAt": "2026-08-17T00:08:00.000Z",
+    "reviewedBy": "system",
+    "notes": "Native wrapped asset for BSC liquidity pairs."
+  },
+  {
+    "address": "0x55d398326f99059fF775485246999027B3197955",
+    "name": "Tether USD (BEP20)",
+    "type": "token",
+    "chainId": 56,
+    "verified": true,
+    "auditStatus": "verified",
+    "status": "approved",
+    "lastReviewedAt": "2026-08-17T00:08:00.000Z",
+    "reviewedBy": "system",
+    "notes": "Stablecoin used in major trading pairs."
+  },
+  {
+    "address": "0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d",
+    "name": "USD Coin (BEP20)",
+    "type": "token",
+    "chainId": 56,
+    "verified": true,
+    "auditStatus": "verified",
+    "status": "approved",
+    "lastReviewedAt": "2026-08-17T00:08:00.000Z",
+    "reviewedBy": "system",
+    "notes": "Stablecoin used in major trading pairs."
+  },
+  {
+    "address": "0x0000000000000000000000000000000000000000",
+    "name": "Unknown Meme Router",
+    "type": "router",
+    "chainId": 56,
+    "verified": false,
+    "auditStatus": "pending",
+    "status": "pending_review",
+    "lastReviewedAt": null,
+    "reviewedBy": null,
+    "notes": "Submitted for review — unverified router contract."
+  }
+]
