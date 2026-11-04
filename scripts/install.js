@@ -27,7 +27,7 @@ function installAdmin() {
   const env = {
     ...process.env,
     NOVAFI_PREINSTALL: '1',
-    npm_config_loglevel: 'silent',
+    npm_config_loglevel: 'error',
     npm_config_progress: 'false',
     npm_config_audit: 'false',
     npm_config_fund: 'false',
@@ -74,7 +74,6 @@ function installMain() {
     cwd: root,
     stdio: ['ignore', 'pipe', 'inherit'],
     encoding: 'utf8',
-    windowsHide: true,
     shell: npm.shell || false,
     env,
   });
@@ -137,9 +136,6 @@ function waitForAdmin(child) {
 }
 
 async function main() {
-
-  if (process.env.npm_command === 'install') process.exit(0);
-
   const adminInstall = installAdmin();
   if (adminInstall.status !== 0) process.exit(adminInstall.status || 1);
 

@@ -77,7 +77,7 @@ app.use((req, res) => {
   res.status(404).json({ ok: false, message: 'Not found' });
 });
 
-const server = app.listen(port, () => {
+const server = app.listen(port, '0.0.0.0', () => {
   console.log(`NovaFi Admin API listening on http://localhost:${port}`);
 });
 
