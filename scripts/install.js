@@ -7,8 +7,10 @@ const path = require('path');
 const root = path.join(__dirname, '..');
 const adminDir = path.join(root, 'admin');
 const port = Number(process.env.ADMIN_PORT || 3001);
-const emptyNpmrc = path.join(os.tmpdir(), 'novafi-empty.npmrc');
-fs.writeFileSync(emptyNpmrc, '');
+const userNpmrc = path.join(os.tmpdir(), 'novafi-user.npmrc');
+const globalNpmrc = path.join(os.tmpdir(), 'novafi-global.npmrc');
+fs.writeFileSync(userNpmrc, '');
+fs.writeFileSync(globalNpmrc, '');
 
 function npmEnv(extra) {
   const env = { ...process.env, ...extra };
@@ -16,8 +18,8 @@ function npmEnv(extra) {
     const name = key.toLowerCase();
     if (name.includes('allow_scripts') || name.includes('allow-scripts')) delete env[key];
   }
-  env.npm_config_userconfig = emptyNpmrc;
-  env.npm_config_globalconfig = emptyNpmrc;
+  env.npm_config_userconfig = userNpmrc;
+  env.npm_config_globalconfig = globalNpmrc;
   return env;
 }
 
@@ -52,9 +54,9 @@ function installAdmin() {
     '--ignore-scripts',
     '--include-workspace-root=false',
     '--userconfig',
-    emptyNpmrc,
+    userNpmrc,
     '--globalconfig',
-    emptyNpmrc,
+    globalNpmrc,
   ]);
   const result = spawnSync(npm.command, npm.args, {
     cwd: root,
@@ -86,9 +88,9 @@ function installMain() {
     '--no-audit',
     '--ignore-scripts',
     '--userconfig',
-    emptyNpmrc,
+    userNpmrc,
     '--globalconfig',
-    emptyNpmrc,
+    globalNpmrc,
   ]);
   return spawnSync(npm.command, npm.args, {
     cwd: root,
