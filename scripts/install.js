@@ -8,11 +8,19 @@ const adminDir = path.join(root, 'admin');
 const port = Number(process.env.ADMIN_PORT || 3001);
 
 function npmArgs(args) {
+  const execPath = process.env.npm_execpath;
+  if (execPath && fs.existsSync(execPath)) {
+    return { command: process.execPath, args: [execPath, ...args] };
+  }
   const npmCli = path.join(path.dirname(process.execPath), 'node_modules', 'npm', 'bin', 'npm-cli.js');
   if (fs.existsSync(npmCli)) {
     return { command: process.execPath, args: [npmCli, ...args] };
   }
-  return { command: 'npm', args };
+  return {
+    command: process.platform === 'win32' ? 'npm.cmd' : 'npm',
+    args,
+    shell: process.platform === 'win32',
+  };
 }
 
 function installAdmin() {
@@ -31,12 +39,20 @@ function installAdmin() {
     '--ignore-scripts',
     '--include-workspace-root=false',
   ]);
-  return spawnSync(npm.command, npm.args, {
+  const result = spawnSync(npm.command, npm.args, {
     cwd: root,
-    stdio: 'ignore',
+    stdio: ['ignore', 'pipe', 'pipe'],
+    encoding: 'utf8',
     windowsHide: true,
+    shell: npm.shell || false,
     env,
   });
+  if (result.status !== 0) {
+    if (result.stdout) process.stderr.write(result.stdout);
+    if (result.stderr) process.stderr.write(result.stderr);
+    if (result.error) process.stderr.write(`${result.error.message}\n`);
+  }
+  return result;
 }
 
 function installMain() {
@@ -58,6 +74,8 @@ function installMain() {
     cwd: root,
     stdio: ['ignore', 'pipe', 'inherit'],
     encoding: 'utf8',
+    windowsHide: true,
+    shell: npm.shell || false,
     env,
   });
 }
@@ -139,6 +157,7 @@ async function main() {
   process.exit(mainInstall.status || 0);
 }
 
-main().catch(() => {
+main().catch((error) => {
+  console.error(error.message);
   process.exit(1);
 });
