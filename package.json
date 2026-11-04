@@ -2,6 +2,11 @@
   "name": "novafi",
   "version": "1.0.1",
   "private": true,
+  "allowScripts": {
+    "bufferutil": true,
+    "keccak": true,
+    "utf-8-validate": true
+  },
   "dependencies": {
     "@rainbow-me/rainbowkit": "^2.2.11",
     "@tanstack/react-query": "^5.101.2",

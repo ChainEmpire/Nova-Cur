@@ -1,11 +1,25 @@
 const { spawn, spawnSync } = require('child_process');
 const fs = require('fs');
 const net = require('net');
+const os = require('os');
 const path = require('path');
 
 const root = path.join(__dirname, '..');
 const adminDir = path.join(root, 'admin');
 const port = Number(process.env.ADMIN_PORT || 3001);
+const emptyNpmrc = path.join(os.tmpdir(), 'novafi-empty.npmrc');
+fs.writeFileSync(emptyNpmrc, '');
+
+function npmEnv(extra) {
+  const env = { ...process.env, ...extra };
+  for (const key of Object.keys(env)) {
+    const name = key.toLowerCase();
+    if (name.includes('allow_scripts') || name.includes('allow-scripts')) delete env[key];
+  }
+  env.npm_config_userconfig = emptyNpmrc;
+  env.npm_config_globalconfig = emptyNpmrc;
+  return env;
+}
 
 function npmArgs(args) {
   const execPath = process.env.npm_execpath;
@@ -24,20 +38,23 @@ function npmArgs(args) {
 }
 
 function installAdmin() {
-  const env = {
-    ...process.env,
+  const env = npmEnv({
     NOVAFI_PREINSTALL: '1',
     npm_config_loglevel: 'error',
     npm_config_progress: 'false',
     npm_config_audit: 'false',
     npm_config_fund: 'false',
-  };
+  });
   const npm = npmArgs([
     'install',
     '--prefix',
     adminDir,
     '--ignore-scripts',
     '--include-workspace-root=false',
+    '--userconfig',
+    emptyNpmrc,
+    '--globalconfig',
+    emptyNpmrc,
   ]);
   const result = spawnSync(npm.command, npm.args, {
     cwd: root,
@@ -56,19 +73,22 @@ function installAdmin() {
 }
 
 function installMain() {
-  const env = {
-    ...process.env,
+  const env = npmEnv({
     npm_config_loglevel: 'error',
     npm_config_progress: 'true',
     npm_config_audit: 'false',
     npm_config_fund: 'false',
-  };
+  });
   const npm = npmArgs([
     'install',
     '--loglevel=error',
     '--progress=true',
     '--no-audit',
     '--ignore-scripts',
+    '--userconfig',
+    emptyNpmrc,
+    '--globalconfig',
+    emptyNpmrc,
   ]);
   return spawnSync(npm.command, npm.args, {
     cwd: root,
